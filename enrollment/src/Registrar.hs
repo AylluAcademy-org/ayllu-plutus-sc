@@ -44,6 +44,7 @@ import           Wallet.Emulator.Wallet
 
 import Validators
 import Policies
+import Utils
 
 
 -- MINTING --
@@ -85,16 +86,9 @@ mint p = do
 
 -- DELIVERING TOKEN --
 
-removeAda :: Value -> Value
-removeAda v = let
-    adaValue = valueOf v adaSymbol adaToken
-    negateAdaValue = lovelaceValueOf . negate $ adaValue
-  in
-    v <> negateAdaValue
-
-hasTokens :: Value -> Bool
-hasTokens = not . Value.isZero . removeAda
-
+-- Delivers non-Ada tokens in given UTxO to the Student's wallet whose
+-- PubKeyHash is in the datum, and transfers the tuition funds in said
+-- UTxO to the Registrar's wallet
 tryDeliverTk :: (TxOutRef, ChainIndexTxOut) -> Contract w RegSchema Text ()
 tryDeliverTk (oref, ci) = do
   case _ciTxOutDatum ci of
@@ -124,7 +118,7 @@ deliverTks p = do
       utxosTkList = PlutusTx.Prelude.filter (hasTokens . _ciTxOutValue . snd) utxosList
   Contract.logInfo @String $ if PlutusTx.Foldable.null utxosTkList
     then "no UTxO's with (non Ada) tokens at registration script"
-    else "started delivering enrollment token(s) to the student(s)"
+    else "started delivering enrollment token(s) to the student(s) and transfering tuiton funds to Registrar"
 
   -- For each UTxO in 'utxosTkList' try to deliver the (non Ada) tokens to the
   -- students.  (Note that the case when 'utxosTkList' is the empty list is

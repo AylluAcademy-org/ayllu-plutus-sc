@@ -106,7 +106,8 @@ test = runEmulatorTraceIO $ do
     { lpAddress = scrAddress p }
   void $ Emulator.waitNSlots 1
 
-  -- deliver enrollment NFTs to students' wallets
+  -- deliver enrollment NFTs to students' wallets, and transfer tuition funds to
+  -- the Registrar's wallet
   callEndpoint @"deliverTks" h1 $ ()
   void $ Emulator.waitNSlots 1
   

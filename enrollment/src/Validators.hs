@@ -58,13 +58,13 @@ mkRegValidator p _ _ ctx = traceIfFalse "consumer not authorized" signedByRegist
     signedByRegistrar :: Bool
     signedByRegistrar = txSignedBy info $ unPaymentPubKeyHash $ registrarPKH p
 
-data RegInit
-instance Scripts.ValidatorTypes RegInit where
-    type instance DatumType RegInit = PubKeyHash
-    type instance RedeemerType RegInit = ()
+data Registrar
+instance Scripts.ValidatorTypes Registrar where
+    type instance DatumType Registrar = PubKeyHash
+    type instance RedeemerType Registrar = ()
 
-typedRegValidator :: RegParam -> Scripts.TypedValidator RegInit
-typedRegValidator p = Scripts.mkTypedValidator @RegInit
+typedRegValidator :: RegParam -> Scripts.TypedValidator Registrar
+typedRegValidator p = Scripts.mkTypedValidator @Registrar
     ($$(PlutusTx.compile [|| mkRegValidator ||]) `PlutusTx.applyCode` PlutusTx.liftCode p)
     $$(PlutusTx.compile [|| wrap ||])
   where
