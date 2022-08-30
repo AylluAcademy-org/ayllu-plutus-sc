@@ -77,24 +77,36 @@ test = runEmulatorTraceIO $ do
   h1 <- activateContractWallet w1 (endpoints1 p)
   h2 <- activateContractWallet w2 (endpoints2 p)
   h3 <- activateContractWallet w3 (endpoints2 p)
+
+  -- student 1 pays tuition
   callEndpoint @"pay" h2 $ PayParams
     { ppStudent = pkh2
     , ppAmount  = 15000000
     }
   void $ Emulator.waitNSlots 1
+
+  -- student 2 pays tuition
   callEndpoint @"pay" h3 $ PayParams
     { ppStudent = pkh3
     , ppAmount  = 15000000
     }
   void $ Emulator.waitNSlots 1
+
+  -- log of utxos at script address
   callEndpoint @"logU" h1 $ LogParams
     { lpAddress = scrAddress p }
   void $ Emulator.waitNSlots 1
+
+  -- minting of enrollment NFTs
   callEndpoint @"mint" h1 $ ()
   void $ Emulator.waitNSlots 2
+
+  -- log of utxos at script address
   callEndpoint @"logU" h1 $ LogParams
     { lpAddress = scrAddress p }
   void $ Emulator.waitNSlots 1
+
+  -- deliver enrollment NFTs to students' wallets
   callEndpoint @"deliverTks" h1 $ ()
   void $ Emulator.waitNSlots 1
   
