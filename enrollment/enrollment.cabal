@@ -1,7 +1,7 @@
 Cabal-Version:      2.4
 Name:               enrollment
 Version:            0.1.0.0
-Author:              Antonio Hernandez & Roberto Cerud
+Authors:             Antonio Hernandez & Roberto Cerrud
 Maintainer:          contacto@antoniohernandez.mx
 Build-Type:          Simple
 Copyright:           © 2022 Ayllu Academy

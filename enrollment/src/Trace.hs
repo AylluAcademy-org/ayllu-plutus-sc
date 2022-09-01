@@ -47,7 +47,6 @@ import Policies
 import Registrar
 import Student
 
-
 -- ENDPOINTS --
 
 endpoints1 :: RegParam -> Contract () RegSchema Text ()

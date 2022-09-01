@@ -45,13 +45,17 @@ import           Wallet.Emulator.Wallet
 import Validators
 import Policies
 
+-- SCHEMA --
+
+type PaySchema = Endpoint "pay" PayParams
+
+
+-- PAY --
 
 data PayParams = PayParams
     { ppStudent   :: !PaymentPubKeyHash
     , ppAmount    :: !Integer
     } deriving (Generic, ToJSON, FromJSON, ToSchema)
-
-type PaySchema = Endpoint "pay" PayParams
 
 pay :: AsContractError e => RegParam -> PayParams -> Contract w s e ()
 pay p pp = do

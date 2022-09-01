@@ -46,6 +46,11 @@ import Validators
 import Policies
 import Utils
 
+-- SCHEMA --
+
+type RegSchema = Endpoint "mint" ()
+             .\/ Endpoint "deliverTks" ()
+             .\/ Endpoint "logU" LogParams
 
 -- MINTING --
 
@@ -110,7 +115,6 @@ tryDeliverTk (oref, ci) = do
           void $ awaitTxConfirmed $ getCardanoTxId ledgerTx
           Contract.logInfo @String $ "delivered token to student's wallet"
 
-            
 deliverTks :: RegParam -> Contract w RegSchema Text ()
 deliverTks p = do
   utxos <- utxosAt $ (scrAddress p)
@@ -131,10 +135,6 @@ deliverTks p = do
 data LogParams = LogParams
   { lpAddress :: !Ledger.Address
   } deriving (Generic, ToJSON, FromJSON)
-
-type RegSchema = Endpoint "mint" ()
-             .\/ Endpoint "deliverTks" ()
-             .\/ Endpoint "logU" LogParams
 
 logU :: AsContractError e => LogParams -> Contract w s e ()
 logU lp = do
