@@ -5,7 +5,7 @@
 
 The *smart contracts* in this folder implement the following narrative:
 
--   The student(s) send the tuition fee to the "registration script".
+-   The student(s) send the tuition fees to the "registration script".
 -   Each student that sent the exact tuition amount (plus *minAda*) receives an **enrollment token** (NFT), delivered to the student's wallet.
 -   The tuition funds are sent to the Registrar's wallet.
 
@@ -28,7 +28,7 @@ Note: the Registrar's endpoints contain the function "`logU`" that allows to log
 
 ## Usage
 
-After cloning the repository, inside folder `enrollment` build the project with
+After cloning the repository, inside folder `enrollment` clone the project with
 
     [nix-shell]$ cabal build
 
@@ -36,7 +36,7 @@ Next, open the *repl* with
 
     [nix-shell]$ cabal repl
 
-In ghci, run the trace emulator with the command
+In ghci, run the trace emulator test with the command
 
     Prelude Trace> test
 
