@@ -20,7 +20,6 @@ import qualified Data.Map            as Map
 import           GHC.Generics        (Generic)
 import           Plutus.Contract   
 import           PlutusTx.Prelude    as TxPrelude hiding (Semigroup(..), unless)
-import           Ledger.Ada          as Ada
 import           Ledger.Constraints
 import qualified Ledger              as L
 import qualified Ledger.Tx           as Tx
@@ -113,9 +112,8 @@ adminTransfer ap = do
   utxos  <- ownUtxos
   ownPKH <- ownFirstPaymentPubKeyHash
   let aylluCS = curSymbolFT aylluTokenName ownPKH
-      val1    = toValue L.minAdaTxOut
-      val2    = singleton aylluCS aylluTokenName $ apAylluAmount ap
-      val     = val1 <> val2
+      valA    = singleton aylluCS aylluTokenName $ apAylluAmount ap
+      val     = valMinAda <> valA
       lookups = unspentOutputs utxos
       tx      = mustPayToOtherScript (vault1Hash $ apTeacherPKH ap) L.unitDatum val
   ledgerTx <- submitTxConstraintsWith @Void lookups tx

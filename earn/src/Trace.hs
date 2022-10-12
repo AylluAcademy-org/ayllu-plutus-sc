@@ -48,30 +48,39 @@ trace1 = do
   h2 <- activateContractWallet w2 endpoints
   h3 <- activateContractWallet w3 endpoints
 
+-- SETUP --
+
+  -- Administrator mints Ayllu tokens
   callEndpoint @"mintAyllu" h1 $ MintParams
     { mpPKH    = pkh1
     , mpAmount = 1000
     }
   void $ waitNSlots 1
 
+  -- Teacher mints "Teacher" tokens
   callEndpoint @"mintTeacher" h2 $ MintParams
     { mpPKH    = pkh2
     , mpAmount = 300
     }
   void $ waitNSlots 1
 
+  -- Enrollment NFT locket at Student's wallet
   callEndpoint @"mintNFT" h3 $ NFTParams
     { npToken   = enrollmentTokenName
     , npAddress = mockWalletAddress w3
     }
   void $ waitNSlots 1
 
+  -- Administrator transfers some Ayllu tokens to Vault 1
   callEndpoint @"adminTransfer" h1 $ AdminParams
     { apTeacherPKH  = pkh2
     , apAylluAmount = 50
     }
   void $ waitNSlots 1
 
+-- REWARD PROCESS --
+
+  -- Teacher awards 10 Ayllu's to Student
   callEndpoint @"reward" h2 $ TeacherParams
     { tpStudentPKH  = pkh3
     , tpAdminPKH    = pkh1
@@ -79,13 +88,16 @@ trace1 = do
     }
   void $ waitNSlots 2
 
-  callEndpoint @"reward" h2 $ TeacherParams -- more rewards
-    { tpStudentPKH  = pkh3
-    , tpAdminPKH    = pkh1
-    , tpAylluAmount = 25
-    }
-  void $ waitNSlots 2
+  -- -- Teacher awards 25 extra Ayllu's to Student
+  -- callEndpoint @"reward" h2 $ TeacherParams
+  --   { tpStudentPKH  = pkh3
+  --   , tpAdminPKH    = pkh1
+  --   , tpAylluAmount = 25
+  --   }
+  -- void $ waitNSlots 2
 
+  -- Student grabs all Ayllu rewards from Vault 2
   callEndpoint @"retrieve" h3 $ RetrieveParams
     { rpAdminPKH = pkh1 }
   void $ waitNSlots 1
+

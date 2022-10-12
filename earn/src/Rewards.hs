@@ -107,24 +107,29 @@ retrieve rp = do
   utxosVault2 <- utxosAt vault2Address
   let utxosNft = Map.filter (hasTokenNamed enrollmentTokenName . Tx._ciTxOutValue) utxosOwn
       orefsNft = Map.keys utxosNft
-      aylluCS  = curSymbolFT aylluTokenName $ rpAdminPKH rp  
-  case orefsNft of
-    [] -> logInfo @String "no Enrollment NFT found"
-    _  -> do
-      let ciTTks = filter (hasTokenNamed teacherTokenName . Tx._ciTxOutValue) (Map.elems utxosOwn)
-      case ciTTks of
-        [] -> logInfo @String "no Teacher Token found"
-        _  -> do
-          let (lks, txs) = mconcat $ constraintsTTk aylluCS ownPKH utxosVault2 <$> ciTTks
-          if null lks
-            then logInfo @String "no rewards info on record"
-            else do
-              let lookups1      = plutusV1OtherScript vault2 <> unspentOutputs utxosNft
-                  tx1           = (mconcat $ mustSpendPubKeyOutput <$> orefsNft)
-                  (lookups, tx) = consolidate (lookups1, tx1) (lks, txs)
-              ledgerTx <- submitTxConstraintsWith @Void lookups tx
-              void $ awaitTxConfirmed $ Tx.getCardanoTxId ledgerTx
-              logInfo @String "retrieved Ayllu rewards"
+      aylluCS  = curSymbolFT aylluTokenName $ rpAdminPKH rp
+      ciTTks   = filter (hasTokenNamed teacherTokenName . Tx._ciTxOutValue) (Map.elems utxosOwn)
+  case (orefsNft, ciTTks) of
+    ([], _) -> logInfo @String "no Enrollment NFT found"
+    (_, []) -> logInfo @String "no Teacher Token found"
+    _       -> do
+  -- case orefsNft of
+  --   [] -> 
+  --   _  -> do
+  --     let 
+  --     case ciTTks of
+  --       [] -> 
+  --       _  -> do
+      let (lks, txs) = mconcat $ constraintsTTk aylluCS ownPKH utxosVault2 <$> ciTTks
+      if null lks
+        then logInfo @String "no rewards info on record"
+        else do
+          let lookups1      = plutusV1OtherScript vault2 <> unspentOutputs utxosNft
+              tx1           = (mconcat $ mustSpendPubKeyOutput <$> orefsNft)
+              (lookups, tx) = consolidate (lookups1, tx1) (lks, txs)
+          ledgerTx <- submitTxConstraintsWith @Void lookups tx
+          void $ awaitTxConfirmed $ Tx.getCardanoTxId ledgerTx
+          logInfo @String "retrieved Ayllu rewards"
 
 
 -- Helper function 'constraintsTTk' allows to retrieve the reference to the UTxO
