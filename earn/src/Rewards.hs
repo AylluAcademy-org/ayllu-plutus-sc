@@ -113,13 +113,6 @@ retrieve rp = do
     ([], _) -> logInfo @String "no Enrollment NFT found"
     (_, []) -> logInfo @String "no Teacher Token found"
     _       -> do
-  -- case orefsNft of
-  --   [] -> 
-  --   _  -> do
-  --     let 
-  --     case ciTTks of
-  --       [] -> 
-  --       _  -> do
       let (lks, txs) = mconcat $ constraintsTTk aylluCS ownPKH utxosVault2 <$> ciTTks
       if null lks
         then logInfo @String "no rewards info on record"

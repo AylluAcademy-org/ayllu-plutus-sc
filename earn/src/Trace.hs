@@ -64,7 +64,7 @@ trace1 = do
     }
   void $ waitNSlots 1
 
-  -- Enrollment NFT locket at Student's wallet
+  -- Enrollment NFT locked at Student's wallet
   callEndpoint @"mintNFT" h3 $ NFTParams
     { npToken   = enrollmentTokenName
     , npAddress = mockWalletAddress w3
