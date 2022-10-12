@@ -1,7 +1,7 @@
 cabal-version:      2.4
-name:               exmp01
+name:               earn
 version:            0.1.0.0
-synopsis:           Signed grab
+synopsis:           Distribute and grab Ayllu rewards
 
 -- A longer description of the package.
 -- description:
@@ -9,12 +9,12 @@ homepage:
 
 -- A URL where users can report bugs.
 -- bug-reports:
-license:            NONE
-author:             ajuggler
+license:            Apache-2.0
+author:             Antonio Hernandez
 maintainer:         contacto@antoniohernandez.mx
 
 -- A copyright notice.
--- copyright:
+copyright:          © 2022 Ayllu Academy
 -- category:
 extra-source-files: CHANGELOG.md
 
@@ -50,26 +50,3 @@ library
     default-language: Haskell2010
     ghc-options:      -Wall -fobject-code -fno-ignore-interface-pragmas -fno-omit-interface-pragmas -fno-strictness -fno-spec-constr -fno-specialise
 
---    build-depends: (from Luis)
-      -- base >= 4.9 && < 5,
-      -- * aeson -any,
-      -- bytestring -any,
-      -- * containers -any,
-      -- * freer-extras -any,
-      -- * playground-common -any,
-      -- * plutus-contract -any,
-      -- * plutus-ledger -any,
-      -- * plutus-ledger-api -any,
-      -- * plutus-ledger-constraints -any,
-      -- * plutus-tx -any,
-      -- * plutus-tx-plugin -any,
-      -- * plutus-script-utils -any,
-      -- * text -any,
-      -- lens -any,
-      -- cardano-api, 
-      -- cardano-binary,
-      -- --additionals
-      -- serialise -any,
-      -- base16-bytestring,
-      -- data-default,
-    

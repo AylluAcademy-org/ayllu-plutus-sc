@@ -28,8 +28,8 @@ hasTokensOf cs tn v = valueOf v cs tn > 0
 hasTokenNamed :: TokenName -> Value -> Bool
 hasTokenNamed tn v = foldr (||) False $ (\cs -> (valueOf v cs tn) > 0) <$> (symbols v)
 
--- Consolidate ([ScriptLookups a], [TxConstraints i o])
+-- Consolidate ([ScriptLookups a], TxConstraints i o)
 consolidate :: (Semigroup a, Semigroup b, Monoid b) => (a, b) -> ([a], b) -> (a, b)
-consolidate (a1, b1) (as, b2) = (foldr (<>) a1 as, b1 <> b2)
+consolidate (a1, b1) (as, b2) = (foldl (<>) a1 as, b1 <> b2)
 
 

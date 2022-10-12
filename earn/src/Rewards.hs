@@ -118,7 +118,7 @@ retrieve rp = do
         then logInfo @String "no rewards info on record"
         else do
           let lookups1      = plutusV1OtherScript vault2 <> unspentOutputs utxosNft
-              tx1           = (mconcat $ mustSpendPubKeyOutput <$> orefsNft)
+              tx1           = mconcat $ mustSpendPubKeyOutput <$> orefsNft
               (lookups, tx) = consolidate (lookups1, tx1) (lks, txs)
           ledgerTx <- submitTxConstraintsWith @Void lookups tx
           void $ awaitTxConfirmed $ Tx.getCardanoTxId ledgerTx

@@ -23,8 +23,6 @@ The *smart contracts* in this folder implement the distribution of rewards earne
 
 This process ensures that only the intended student can collect the rewards, that only the intended rewards can be collected by the student, and that the student has to be enrolled in the course to be able to collect the rewards.
 
-Some sample scenarios are illustrated in file `scenarios.pdf`.  These can be reproduced by running the trace emulator, as described in *Usage* below.
-
 
 ## Files
 
@@ -38,20 +36,5 @@ Some sample scenarios are illustrated in file `scenarios.pdf`.  These can be rep
 
 ## Usage
 
-Assuming you have *Nix* installed and have cloned this repository as well as the *plutus-apps* repository.  Go to directory `plutus-apps` and execute
-
-    [bash]$ git checkout v1.0.0-alpha1
-    [bash]$ nix-shell
-
-(This is the tag found in file `earn/cabal.project` of this repository; first time execution may take a long time.)  Inside the nix-shell, go to directory `earn`, cloned from this repository, and build the project with
-
-    [nix-shell]$ cabal build
-
-Next, open the *repl* with
-
-    [nix-shell]$ cabal repl
-
-In ghci, run the trace emulator with the command
-
-    Prelude Trace> test
+(In progress&#x2026;)
 
