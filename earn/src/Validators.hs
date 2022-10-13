@@ -132,13 +132,13 @@ vault1Address = L.scriptHashAddress . vault1Hash
 
 {-# INLINABLE mkVault2 #-}
 mkVault2 :: ValidationDatum -> () -> L.ScriptContext -> Bool
-mkVault2 cd _ ctx = traceIfFalse "NFT validation failed" validateNFT
+mkVault2 vd _ ctx = traceIfFalse "NFT validation failed" validateNFT
   where
     info :: L.TxInfo
     info = L.scriptContextTxInfo ctx
 
     nftCs :: CurrencySymbol
-    nftCs = vdSymbol cd
+    nftCs = vdSymbol vd
 
     validateNFT :: Bool
     validateNFT = any isNftTk $ L.txInfoInputs info
