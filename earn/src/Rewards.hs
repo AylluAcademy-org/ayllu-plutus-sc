@@ -115,7 +115,7 @@ retrieve rp = do
     _       -> do
       let (lks, txs) = mconcat $ constraintsTTk aylluCS ownPKH utxosVault2 <$> ciTTks
       if null lks
-        then logInfo @String "no rewards info on record"
+        then logInfo @String "missing or invalid rewards info on record"
         else do
           let lookups1      = plutusV1OtherScript vault2 <> unspentOutputs utxosNft
               tx1           = mconcat $ mustSpendPubKeyOutput <$> orefsNft
@@ -144,19 +144,16 @@ constraintsTTk aylluCS' ownPKH' utxosVault2' ciTTk =
         case (orefTTkM, aylluAmountTTkM) of
         (Nothing, _)                        -> ([], mempty)
         (_, Nothing)                        -> ([], mempty)
-        (Just orefTTk, Just aylluAmountTTk) -> if aylluAmountTTk <= 0
-          then ([], mempty)
-          else let
+        (Just orefTTk, Just aylluAmountTTk)
+            | aylluAmountTTk <= 0 -> ([], mempty)
+            | Map.null utxosTTk   -> ([], mempty)
+            | otherwise           -> ([lookups], tx)
+          where
             utxosTTk  = Map.filterWithKey (\o _ -> (o == orefTTk)) utxosVault2'
             valReward = singleton aylluCS' aylluTokenName aylluAmountTTk
             val       = valMinAda <> valReward
             lookups   = unspentOutputs utxosTTk
             tx        = mustSpendScriptOutput orefTTk L.unitRedeemer <>
                         mustPayToPubKey ownPKH' val
-          in
-            ([lookups], tx)
 
 -- TODO:  Student must give the Teacher Token back in exchange of retrieving the Ayllu rewards.
-
-
-
