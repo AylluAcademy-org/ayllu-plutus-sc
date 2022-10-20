@@ -28,7 +28,12 @@ Note: the Registrar's endpoints contain the function "`logU`" that allows to log
 
 ## Usage
 
-After cloning the repository, inside folder `enrollment` build the project with
+Assuming you have *Nix* installed and have cloned this repository as well as the *plutus-apps* repository.  Go to directory `plutus-apps` and execute
+
+    [bash]$ git checkout 62efdd2bfab3e076d40e07f8f4d7864a7f2ccc91
+    [bash]$ nix-shell
+
+(This is the tag found in file `enrollment/cabal.project` of this repository; first time execution may take a long time.)  Inside the nix-shell, go to directory `enrollment`, cloned from this repository, and build the project with
 
     [nix-shell]$ cabal build
 

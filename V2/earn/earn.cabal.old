@@ -1,0 +1,52 @@
+cabal-version:      2.4
+name:               earn
+version:            0.1.0.0
+synopsis:           Distribute and grab Ayllu rewards
+
+-- A longer description of the package.
+-- description:
+homepage:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+license:            Apache-2.0
+author:             Antonio Hernandez
+maintainer:         contacto@antoniohernandez.mx
+
+-- A copyright notice.
+copyright:          © 2022 Ayllu Academy
+-- category:
+extra-source-files: CHANGELOG.md
+
+library
+    exposed-modules:  Trace
+                    , Validators
+                    , Setup
+                    , Rewards
+                    , Utils
+                    , Params
+
+    -- Modules included in this library but not exported.
+    -- other-modules:
+
+    -- LANGUAGE extensions used by modules in this package.
+    -- other-extensions:
+    build-depends:    base ^>=4.14.3.0
+                    , aeson
+                    , containers
+                    , data-default
+                    , freer-extras
+                    , playground-common
+                    , plutus-contract
+                    , plutus-ledger
+                    , plutus-ledger-api
+                    , plutus-ledger-constraints
+                    , plutus-script-utils
+                    , plutus-tx-plugin
+                    , plutus-tx
+                    , text
+
+    hs-source-dirs:   src
+    default-language: Haskell2010
+    ghc-options:      -Wall -fobject-code -fno-ignore-interface-pragmas -fno-omit-interface-pragmas -fno-strictness -fno-spec-constr -fno-specialise
+
