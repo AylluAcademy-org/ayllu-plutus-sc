@@ -149,7 +149,7 @@ constraintsTTk aylluCS' ownPKH' utxosVault2' ciTTk =
             | Map.null utxosTTk   -> ([], mempty)
             | otherwise           -> ([lookups], tx)
           where
-            utxosTTk  = Map.filterWithKey (\o _ -> (o == orefTTk)) utxosVault2'
+            utxosTTk  = Map.filterWithKey (\o _ -> o == orefTTk) utxosVault2'
             valReward = singleton aylluCS' aylluTokenName aylluAmountTTk
             val       = valMinAda <> valReward
             lookups   = unspentOutputs utxosTTk
